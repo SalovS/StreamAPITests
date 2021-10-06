@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Counter {
@@ -31,8 +32,10 @@ public class Counter {
     }
 
     public void getSeniors(List<Employee> employees, int i) {
-        System.out.printf("%d самых старших сотрудников зовут:", i);
-        employees.stream().sorted((o1, o2) -> o2.getAge() - o1.getAge()).limit(i).
-                forEach(s -> System.out.printf(" %s,", s.getName()));
+        System.out.println(employees.stream()
+                .sorted((o1, o2) -> o2.getAge() - o1.getAge())
+                .map((Function<Employee, String>) worker -> worker.getName())
+                .limit(i)
+                .collect(Collectors.joining(", ", i + " самых старших сотрудников зовут: ",";")));
     }
 }

@@ -87,8 +87,10 @@ public class Main {
                 new Employee("Alfie", 42, 53000),
                 new Employee("Riley", 56, 85000)
         ));
+
         System.out.printf("Средняя зарплата сотрудников %.2f\n", counter.getAvarageSalary(employees));
-        counter.getSeniors(employees, 2);
+
+        counter.getSeniors(employees, 4);
     }
 }
 
