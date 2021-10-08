@@ -1,30 +1,29 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Counter {
 
-    public Word getMostPupularWord(String[] words) {
-        List<Word> wordsArray = new ArrayList<>();
-        wordsArray.add(new Word(words[0]));
+    public String getMostPupularWord(String[] words) {
+        Map<String, Integer> wordsArr = new HashMap<>();
+
         for (int i = 1; i < words.length; i++) {
-            boolean dontFindWord = true;
-            for(Word oldWord: wordsArray){
-                if(oldWord.getName().contains(words[i])){
-                    oldWord.addWord();
-                    dontFindWord = false;
-                    break;
-                }
-            }
-            if(dontFindWord) {
-                wordsArray.add(new Word(words[i]));
+            if(wordsArr.containsKey(words[i])){
+                wordsArr.put(words[i], wordsArr.get(words[i]) + 1);
+            }else{
+                wordsArr.put(words[i], 1);
             }
         }
-        List<Word> sortWords = wordsArray.stream().sorted((o1, o2) -> o2.getCount() - o1.getCount())
-                .collect(Collectors.toList());
 
-        return sortWords.get(0);
+        return wordsArr.entrySet().stream()
+                .sorted((word1, word2) -> word2.getValue() - word1.getValue())
+                .map(word -> word.getKey())
+                .filter(o1 -> o1.length() > 1)
+                .limit(1)
+                .collect(Collectors.toList())
+                .toString()
+                .replace('[',' ')
+                .replace(']',' ')
+                .trim();
     }
 
     public double getAvarageSalary(List<Employee> employees) {
@@ -34,7 +33,7 @@ public class Counter {
     public void getSeniors(List<Employee> employees, int i) {
         System.out.println(employees.stream()
                 .sorted((o1, o2) -> o2.getAge() - o1.getAge())
-                .map((Function<Employee, String>) worker -> worker.getName())
+                .map(worker -> worker.getName())
                 .limit(i)
                 .collect(Collectors.joining(", ", i + " самых старших сотрудников зовут: ",";")));
     }

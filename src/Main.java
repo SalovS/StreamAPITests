@@ -73,9 +73,8 @@ public class Main {
                 "\n" +
                 "Но удар по инвестиционной привлекательности Facebook налицо, добавляет Денис Кусков. Сбой показывает инвесторам: компания так и не смогла переварить и адаптировать бизнесы, которые в свое время были куплены за огромные деньги. Как в будущем это скажется на акциях Facebook, эксперт затруднился прогнозировать.\n";
 
-        String[] words = text.split("\s");
-        Word word = counter.getMostPupularWord(words);
-        System.out.printf("Наиболее частое слово в тексте (%s) встречается %d раз\n",word.getName(), word.getCount());
+        String[] words = text.toLowerCase().split("\\P{L}+");
+        System.out.printf("Наиболее частое слово в тексте (%s)\n",counter.getMostPupularWord(words));
 
         List<Employee> employees = new ArrayList<>(Arrays.asList(
                 new Employee("Harry", 35, 40000),
